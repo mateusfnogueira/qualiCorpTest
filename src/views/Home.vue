@@ -45,7 +45,7 @@
       perfil
     </h3>
     <v-card v-if="stateProfissao" class="cardProfissao">
-      <v-simple-table fixed-header height="300px" :key="prof.id">
+      <v-simple-table fixed-header height="700px" :key="prof.id">
         <template v-slot:default>
           <tbody>
             <tr v-for="prof in profissoes" :key="prof">
@@ -66,11 +66,12 @@
       <v-col
         sm="2"
         md="3"
+        lg="4"
         cols="12"
-        class="ma-4"
+        class="ma-2"
         v-for="plano in planos.planos"
         :key="plano"
-        ><v-card class="cardPlanos" height="200px">
+        ><v-card class="cardPlanos" height="250px">
           <v-row class="d-flex justify-space-between" no-gutters>
             <v-img
               class="ml-2"
@@ -80,7 +81,7 @@
             ></v-img>
             <h2 class="mr-2 type">{{ plano.nivel }}</h2>
           </v-row>
-          <v-row class="d-flex justify-center">
+          <v-row class="d-flex justify-center mt-0" no-gutters>
             <p>
               Nome:
               {{
@@ -92,7 +93,7 @@
               }}
             </p>
           </v-row>
-          <v-row class="d-flex justify-center">
+          <v-row class="d-flex justify-center mt-0" no-gutters>
             <p>
               Segmentação:
               {{
@@ -104,7 +105,7 @@
               }}
             </p>
           </v-row>
-          <v-row class="d-flex justify-space-around">
+          <v-row class="d-flex justify-space-around mt-0" no-gutters>
             <p>
               Acomodação:
               {{
@@ -115,7 +116,7 @@
                   })
               }}
             </p>
-            <p>R${{ plano.precos.total }}</p>
+            <p>R${{ plano.precos.total.replace('.', ',') }}</p>
           </v-row>
         </v-card>
       </v-col>
@@ -156,7 +157,7 @@ export default {
       this.loading = true;
       try {
         const resProfissoes = await this.$http.get(
-          'http://lb-aws-1105894158.sa-east-1.elb.amazonaws.com/profissao/SP/SÃO%20PAULO?api-key=ddd70c32-fc98-4618-b494-a9698f824353'
+          'profissao/SP/SÃO%20PAULO?api-key=ddd70c32-fc98-4618-b494-a9698f824353'
         );
         this.profissoes = resProfissoes.data;
         this.stateProfissao = true;
@@ -172,7 +173,7 @@ export default {
       this.stateProfissao = false;
       try {
         const respEntidade = await this.$http.get(
-          `http://lb-aws-1105894158.sa-east-1.elb.amazonaws.com/entidade/${value}/SP/S%C3%83O%20PAULO?api-key=4b94dba2-5524-4632-939b-92df1c50a645`
+          `entidade/${value}/SP/S%C3%83O%20PAULO?api-key=4b94dba2-5524-4632-939b-92df1c50a645`
         );
         this.entidades = respEntidade.data;
         await this.getPlanos();
@@ -184,7 +185,7 @@ export default {
     },
 
     async getPlanos() {
-      const uriPalnos = `http://lb-aws-1105894158.sa-east-1.elb.amazonaws.com/plano?api-key=261fd4d0-fd9f-468a-afa9-f5a89ed3701c`;
+      const uriPalnos = `plano?api-key=261fd4d0-fd9f-468a-afa9-f5a89ed3701c`;
       for (let i = 0; i < this.entidades.length; i++) {
         await this.$http
           .post(uriPalnos, {
@@ -252,6 +253,7 @@ export default {
   }
 
   .cardForm {
+    width: 40%;
     .form {
       width: 100%;
     }
@@ -262,7 +264,7 @@ export default {
   }
 
   .cardPlanos {
-    width: 350px;
+    width: 450px;
     p {
       font-size: 1rem;
     }
@@ -272,8 +274,10 @@ export default {
   }
 }
 
-@media (min-width: 200px) and (max-width: 820px) {
-  .home {
+
+
+@media (min-width: 200px) and (max-width: 900px) {
+    .home {
     .load {
       top: 20%;
       left: 30%;
