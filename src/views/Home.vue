@@ -226,7 +226,7 @@ export default {
 
   .load {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 40%;
     display: flex;
     justify-content: center;
