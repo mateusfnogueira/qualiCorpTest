@@ -125,9 +125,10 @@
 </template>
 
 <script>
+import { response } from 'express';
 export default {
   data: () => ({
-    valid: true,
+    valid: false,
     stateForm: true,
     statePlanos: false,
     stateProfissao: false,
@@ -159,6 +160,7 @@ export default {
         const resProfissoes = await this.$http.get(
           'profissao/SP/SÃO%20PAULO?api-key=ddd70c32-fc98-4618-b494-a9698f824353'
         );
+        console.log(resProfissoes)
         this.profissoes = resProfissoes.data;
         this.stateProfissao = true;
       } catch (error) {
@@ -267,6 +269,7 @@ export default {
     width: 450px;
     p {
       font-size: 1rem;
+      margin: 1px;
     }
     .type {
       font-size: 1.6rem;
